@@ -1,7 +1,5 @@
-var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
-
 module.exports = function (grunt) {
-
+  var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
     dist: 'dist'
@@ -21,7 +19,7 @@ module.exports = function (grunt) {
         src: ['app/scripts/**/*.ts'],
         //dest: 'build/js',
         options: {
-          module: 'commonjs', 
+          module: 'commonjs',
           moduleResolution: 'node',
           target: 'es6',
           experimentalDecorators: true,
@@ -82,45 +80,65 @@ module.exports = function (grunt) {
     },
 
     watch: {
+      ts: {
         files: 'app/scripts/**/*.ts',
-        tasks: ['ts']
+        tasks: ['ts'],
+        options: {
+          livereload: '<%= connect.server.options.livereload %>'
+        }
+      },
+      livereload: {
+        options: {
+          livereload: '<%= connect.server.options.livereload %>'
+        },
+        files: [
+          '<%= yeoman.app %>/{,*/}*.html',
+          '.tmp/styles/{,*/}*.css',
+          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+        ]
+      }
     },
 
-    
+
 
     connect: {
-      options: {
+      server: {
+        options: {
+          open: true,
           port: 9000,
           hostname: 'localhost',
-          livereload: 35729
-        },
-      livereload: {
-          options: {
-            open: true,
-            middleware: function (connect) {
-              return [
-                connect.static('.tmp'),
-                connect().use(
-                  '/bower_components',
-                  connect.static('./bower_components')
-                ),
-                connect().use(
-                  '/node_modules',
-                  connect.static('./node_modules')
-                ),
-                connect().use(
-                  '/app/styles',
-                  connect.static('./app/styles')
-                ),
-                connect.static('.'),
-                proxySnippet
-              ];
-            }
-          }
+          livereload: 35729,
+
         }
+      }
+      // ,
+      // livereload: {
+      //   options: {
+      //     open: true,
+      //     middleware: function (connect) {
+      //       return [
+      //         connect.static('.tmp'),
+      //         connect().use(
+      //           '/bower_components',
+      //           connect.static('./bower_components')
+      //         ),
+      //         connect().use(
+      //           '/node_modules',
+      //           connect.static('./node_modules')
+      //         ),
+      //         connect().use(
+      //           '/app/styles',
+      //           connect.static('./app/styles')
+      //         ),
+      //         connect.static('<%= yeoman.app %>'),
+      //         proxySnippet
+      //       ];
+      //     }
+      //   }
+      // }
     }
 
-    
+
   });
 
   // Load the plugin that provides the "uglify" task.
@@ -129,6 +147,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  // grunt.loadNpmTasks('grunt-connect-proxy');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-ts');
 
@@ -153,15 +172,14 @@ module.exports = function (grunt) {
   grunt.registerTask(
     'serve',
     'Watches the project for changes, automatically builds them and runs a server.',
-    function(target)
-    {
+    function (target) {
       grunt.task.run([
-      'clean:server',
-      //'wiredep',
-      'connect:livereload', 
-      'watch'
-    ]);
+        'clean:server',
+        'connect',
+        'watch'
+      ]);
     }
   );
+
 
 };
