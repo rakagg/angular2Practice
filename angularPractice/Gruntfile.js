@@ -1,15 +1,27 @@
+var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
+
 module.exports = function (grunt) {
+
+  var appConfig = {
+    app: require('./bower.json').appPath || 'app',
+    dist: 'dist'
+  };
+
+
 
   // Project configuration.
   grunt.initConfig({
+
+    yeoman: appConfig,
+
     pkg: grunt.file.readJSON('package.json'),
 
     ts: {
       base: {
         src: ['app/scripts/**/*.ts'],
-        dest: 'build/js',
+        //dest: 'build/js',
         options: {
-          module: 'system', 
+          module: 'commonjs', 
           moduleResolution: 'node',
           target: 'es6',
           experimentalDecorators: true,
@@ -29,24 +41,31 @@ module.exports = function (grunt) {
     },
 
     clean: {
-      options: {
-        force: true
+      dist: {
+        files: [{
+          dot: true,
+          src: [
+            '.tmp',
+            '<%= yeoman.dist %>/{,*/}*',
+            '!<%= yeoman.dist %>/.git{,*/}*'
+          ]
+        }]
       },
-      build: {
-        src: ['build']
-      },
-      stylesheets: {
-        src: ['build/**/*.css', '!build/application.css']
-      },
-      scripts: {
-        src: ['build/**/*.js', '!build/application.js']
-      },
+      server: '.tmp'
     },
 
     cssmin: {
       build: {
         files: {
           'build/application.css': ['build/**/*.css']
+        }
+      }
+    },
+
+    jsmin: {
+      build: {
+        files: {
+          'build/application.js': ['build/**/*.js']
         }
       }
     },
@@ -63,29 +82,45 @@ module.exports = function (grunt) {
     },
 
     watch: {
-      stylesheets: {
-        files: 'source/**/*.styl',
-        tasks: ['stylesheets']
-      },
-
-      copy: {
-        files: ['source/**', '!source/**/*.styl'],
-        tasks: ['copy']
-      }
+        files: 'app/scripts/**/*.ts',
+        tasks: ['ts']
     },
 
+    
+
     connect: {
-      server: {
-        options: {
-          keepalive: true,
-          open: true,
-          port: 8000,
+      options: {
+          port: 9000,
           hostname: 'localhost',
-          debug: true
+          livereload: 35729
+        },
+      livereload: {
+          options: {
+            open: true,
+            middleware: function (connect) {
+              return [
+                connect.static('.tmp'),
+                connect().use(
+                  '/bower_components',
+                  connect.static('./bower_components')
+                ),
+                connect().use(
+                  '/node_modules',
+                  connect.static('./node_modules')
+                ),
+                connect().use(
+                  '/app/styles',
+                  connect.static('./app/styles')
+                ),
+                connect.static('.'),
+                proxySnippet
+              ];
+            }
+          }
         }
-      }
     }
 
+    
   });
 
   // Load the plugin that provides the "uglify" task.
@@ -100,7 +135,7 @@ module.exports = function (grunt) {
   grunt.registerTask(
     'build',
     'Compiles all of the assets and copies the files to the build directory.',
-    ['clean:build', 'copy', 'stylesheets', 'scripts','ts']
+    ['clean:build', 'ts', 'copy', 'stylesheets']
   );
 
   grunt.registerTask(
@@ -116,9 +151,17 @@ module.exports = function (grunt) {
   );
 
   grunt.registerTask(
-    'default',
+    'serve',
     'Watches the project for changes, automatically builds them and runs a server.',
-    ['build', 'connect', 'watch']
+    function(target)
+    {
+      grunt.task.run([
+      'clean:server',
+      //'wiredep',
+      'connect:livereload', 
+      'watch'
+    ]);
+    }
   );
 
 };

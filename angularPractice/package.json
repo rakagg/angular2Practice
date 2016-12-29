@@ -42,12 +42,9 @@
     "grunt-contrib-watch": "0.5.x"
   },
   "devDependencies": {
+    "@types/node": "^6.0.54",
     "concurrently": "^2.0.0",
-    "lite-server": "^2.2.0",
-    "typescript": "^1.8.10",
-    "typings": "^1.0.4",
     "grunt": "~0.4.5",
-    "grunt-contrib-jshint": "~1.0.0",
     "grunt-autoprefixer": "0.2.x",
     "grunt-contrib-clean": "0.5.x",
     "grunt-contrib-coffee": "0.7.x",
@@ -55,9 +52,13 @@
     "grunt-contrib-copy": "0.4.x",
     "grunt-contrib-cssmin": "0.6.x",
     "grunt-contrib-jade": "0.8.x",
+    "grunt-contrib-jshint": "~1.0.0",
     "grunt-contrib-stylus": "0.8.x",
     "grunt-contrib-uglify": "0.2.x",
     "grunt-contrib-watch": "0.5.x",
-    "grunt-typescript": ""
+    "grunt-typescript": "",
+    "lite-server": "^2.2.0",
+    "typescript": "^1.8.10",
+    "typings": "^1.0.4"
   }
 }

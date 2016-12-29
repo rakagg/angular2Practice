@@ -8,19 +8,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var Home = (function () {
-    function Home() {
+const core_1 = require('@angular/core');
+const router_1 = require('@angular/router');
+let Home = class Home {
+    constructor() {
+        this.heading = 'Person Details';
     }
-    Home = __decorate([
-        core_1.Component({
-            directives: [router_1.ROUTER_DIRECTIVES],
-            selector: 'home',
-            templateUrl: 'app/scripts/home/home.html'
-        }), 
-        __metadata('design:paramtypes', [])
-    ], Home);
-    return Home;
-}());
+    ngOnInit() {
+    }
+};
+Home = __decorate([
+    core_1.Component({
+        moduleId: module.id,
+        directives: [router_1.ROUTER_DIRECTIVES],
+        selector: 'home',
+        templateUrl: 'home.html'
+    }), 
+    __metadata('design:paramtypes', [])
+], Home);
 exports.Home = Home;
+//# sourceMappingURL=home.component.js.map

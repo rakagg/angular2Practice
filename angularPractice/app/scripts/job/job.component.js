@@ -8,19 +8,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var Job = (function () {
-    function Job() {
+const core_1 = require('@angular/core');
+const router_1 = require('@angular/router');
+let Job = class Job {
+    constructor() {
     }
-    Job = __decorate([
-        core_1.Component({
-            directives: [router_1.ROUTER_DIRECTIVES],
-            selector: 'job',
-            templateUrl: 'app/scripts/job/job.html'
-        }), 
-        __metadata('design:paramtypes', [])
-    ], Job);
-    return Job;
-}());
+    ngOnInit() {
+    }
+};
+Job = __decorate([
+    core_1.Component({
+        moduleId: module.id,
+        directives: [router_1.ROUTER_DIRECTIVES],
+        selector: 'job',
+        templateUrl: 'job.html'
+    }), 
+    __metadata('design:paramtypes', [])
+], Job);
 exports.Job = Job;
+//# sourceMappingURL=job.component.js.map
