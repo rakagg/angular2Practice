@@ -1,19 +1,14 @@
-import {Component , OnInit} from '@angular/core';
-import {ROUTER_DIRECTIVES} from '@angular/router';
-declare var module:any;
+import {Component} from '@angular/core';
 @Component({
-  moduleId: module.id,
-  directives : [ROUTER_DIRECTIVES],
   selector: 'job',
-  templateUrl: 'job.html'
+  templateUrl: 'app/scripts/job/job.html'
 })
-export class Job implements OnInit{
+export class Job  implements OnInit{
   constructor() {
 
     
 
   }
-
   ngOnInit(){
      //called after the constructor and called  after the first ngOnChanges() 
   }

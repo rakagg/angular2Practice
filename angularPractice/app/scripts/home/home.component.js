@@ -9,7 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 const core_1 = require('@angular/core');
-const router_1 = require('@angular/router');
 let Home = class Home {
     constructor() {
         this.heading = 'Person Details';
@@ -19,10 +18,8 @@ let Home = class Home {
 };
 Home = __decorate([
     core_1.Component({
-        moduleId: module.id,
-        directives: [router_1.ROUTER_DIRECTIVES],
         selector: 'home',
-        templateUrl: 'home.html'
+        templateUrl: 'app/scripts/home/home.html'
     }), 
     __metadata('design:paramtypes', [])
 ], Home);
