@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component,OnInit} from '@angular/core';
 @Component({
   selector: 'job',
   templateUrl: 'app/scripts/job/job.html'
