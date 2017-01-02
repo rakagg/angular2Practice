@@ -3,9 +3,10 @@ import {Component} from '@angular/core';
 @Component({
 
   selector: 'home',
-  templateUrl: 'app/scripts/home/home.html'
+    templateUrl: 'home.html'
 })
-export class Home {
+export class Home implements OnInit{
+  heading = 'Person Details';
   constructor() {
 
   }

@@ -1,15 +1,25 @@
 module.exports = function (grunt) {
+  var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
+  var appConfig = {
+    app: require('./bower.json').appPath || 'app',
+    dist: 'dist'
+  };
+
+
 
   // Project configuration.
   grunt.initConfig({
+
+    yeoman: appConfig,
+
     pkg: grunt.file.readJSON('package.json'),
 
     ts: {
       base: {
         src: ['app/scripts/**/*.ts'],
-        dest: 'build/js',
+        //dest: 'build/js',
         options: {
-          module: 'system', 
+          module: 'commonjs',
           moduleResolution: 'node',
           target: 'es6',
           experimentalDecorators: true,
@@ -29,24 +39,31 @@ module.exports = function (grunt) {
     },
 
     clean: {
-      options: {
-        force: true
+      dist: {
+        files: [{
+          dot: true,
+          src: [
+            '.tmp',
+            '<%= yeoman.dist %>/{,*/}*',
+            '!<%= yeoman.dist %>/.git{,*/}*'
+          ]
+        }]
       },
-      build: {
-        src: ['build']
-      },
-      stylesheets: {
-        src: ['build/**/*.css', '!build/application.css']
-      },
-      scripts: {
-        src: ['build/**/*.js', '!build/application.js']
-      },
+      server: '.tmp'
     },
 
     cssmin: {
       build: {
         files: {
           'build/application.css': ['build/**/*.css']
+        }
+      }
+    },
+
+    jsmin: {
+      build: {
+        files: {
+          'build/application.js': ['build/**/*.js']
         }
       }
     },
@@ -63,28 +80,64 @@ module.exports = function (grunt) {
     },
 
     watch: {
-      stylesheets: {
-        files: 'source/**/*.styl',
-        tasks: ['stylesheets']
+      ts: {
+        files: 'app/scripts/**/*.ts',
+        tasks: ['ts'],
+        options: {
+          livereload: '<%= connect.server.options.livereload %>'
+        }
       },
-
-      copy: {
-        files: ['source/**', '!source/**/*.styl'],
-        tasks: ['copy']
+      livereload: {
+        options: {
+          livereload: '<%= connect.server.options.livereload %>'
+        },
+        files: [
+          '<%= yeoman.app %>/{,*/}*.html',
+          '.tmp/styles/{,*/}*.css',
+          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+        ]
       }
     },
+
+
 
     connect: {
       server: {
         options: {
-          keepalive: true,
           open: true,
-          port: 8000,
+          port: 9000,
           hostname: 'localhost',
-          debug: true
+          livereload: 35729,
+
         }
       }
+      // ,
+      // livereload: {
+      //   options: {
+      //     open: true,
+      //     middleware: function (connect) {
+      //       return [
+      //         connect.static('.tmp'),
+      //         connect().use(
+      //           '/bower_components',
+      //           connect.static('./bower_components')
+      //         ),
+      //         connect().use(
+      //           '/node_modules',
+      //           connect.static('./node_modules')
+      //         ),
+      //         connect().use(
+      //           '/app/styles',
+      //           connect.static('./app/styles')
+      //         ),
+      //         connect.static('<%= yeoman.app %>'),
+      //         proxySnippet
+      //       ];
+      //     }
+      //   }
+      // }
     }
+
 
   });
 
@@ -94,13 +147,14 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  // grunt.loadNpmTasks('grunt-connect-proxy');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-ts');
 
   grunt.registerTask(
     'build',
     'Compiles all of the assets and copies the files to the build directory.',
-    ['clean:build', 'copy', 'stylesheets', 'ts']
+    ['clean:build', 'ts', 'copy', 'stylesheets']
   );
 
   grunt.registerTask(
@@ -116,9 +170,16 @@ module.exports = function (grunt) {
   );
 
   grunt.registerTask(
-    'default',
+    'serve',
     'Watches the project for changes, automatically builds them and runs a server.',
-    ['build', 'connect', 'watch']
+    function (target) {
+      grunt.task.run([
+        'clean:server',
+        'connect',
+        'watch'
+      ]);
+    }
   );
+
 
 };
