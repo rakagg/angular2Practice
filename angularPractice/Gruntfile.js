@@ -16,8 +16,7 @@ module.exports = function (grunt) {
 
     ts: {
       base: {
-        src: ['app/scripts/**/*.ts'],
-        //dest: 'build/js',
+        src: ['app/scripts/**/*.ts', 'app/*.ts'],
         options: {
           module: 'commonjs',
           moduleResolution: 'node',
@@ -80,13 +79,17 @@ module.exports = function (grunt) {
     },
 
     watch: {
+      gruntfile: {
+        files: ['Gruntfile.js']
+      },
       ts: {
-        files: 'app/scripts/**/*.ts',
+        files: ['app/scripts/**/*.ts', 'app/*.ts'],
         tasks: ['ts'],
         options: {
           livereload: '<%= connect.server.options.livereload %>'
         }
       },
+     
       livereload: {
         options: {
           livereload: '<%= connect.server.options.livereload %>'
@@ -98,9 +101,7 @@ module.exports = function (grunt) {
         ]
       }
     },
-
-
-
+    
     connect: {
       server: {
         options: {
