@@ -23,7 +23,7 @@ const appRoutes: Routes = [
         HttpModule,
         RouterModule.forRoot(appRoutes),
         TranslateModule.forRoot()
-        // other imports here
+        
     ],
     declarations: [
         AppComponent,
