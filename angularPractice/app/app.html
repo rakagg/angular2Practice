@@ -2,11 +2,11 @@
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#/">Angular Routing Example</a>
+                <a class="navbar-brand" href="/">{{ 'HOME.TITLE' | translate}}</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a [routerLink]="['Home']"><i class="fa fa-home"></i> Home</a></li>
-                <li><a [routerLink]="['Job']"><i class="fa fa-shield"></i> Jobs</a></li>
+                <li><a [routerLink]="['/home']"><i class="fa fa-home"></i> Home</a></li>
+                <li><a [routerLink]="['/job']"><i class="fa fa-shield"></i> Jobs</a></li>
 
             </ul>
         </div>

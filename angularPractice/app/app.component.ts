@@ -1,19 +1,18 @@
-import {Component} from '@angular/core';
-import {RouteConfig,ROUTER_DIRECTIVES} from '@angular/router-deprecated';
-import {Home} from './scripts/home/home.component';
-import {Job} from './scripts/job/job.component';
+import { Component, OnInit } from '@angular/core';
+import {TranslateService} from 'ng2-translate';
 
 @Component({
-  directives: [ROUTER_DIRECTIVES],
   selector: 'my-app',
   templateUrl: 'app/app.html'
-}
-)
-@RouteConfig([
-  { path: '/',name: 'Home', component: Home},
-  { path: '/job',name: 'Job', component: Job }
-])
+})
+export class AppComponent implements OnInit {
+    constructor(private translate: TranslateService) { }
+  
+    ngOnInit() {
+        this.translate.addLangs(["en", "fr"]);
+        this.translate.setDefaultLang('en');
 
-export class AppComponent {
-
+        const browserLang = this.translate.getBrowserLang();
+        this.translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+    }
 }

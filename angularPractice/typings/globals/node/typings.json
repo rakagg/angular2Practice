@@ -1,8 +1,8 @@
 {
   "resolution": "main",
   "tree": {
-    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/81629d091fb07b9367fbc7ee3e27de97603d56b7/node/index.d.ts",
-    "raw": "registry:dt/node#6.0.0+20161227094133",
-    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/81629d091fb07b9367fbc7ee3e27de97603d56b7/node/index.d.ts"
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/30e5a9f99a088d75829d623704837255922e95ec/node/node.d.ts",
+    "raw": "registry:dt/node#6.0.0+20160608110640",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/30e5a9f99a088d75829d623704837255922e95ec/node/node.d.ts"
   }
 }

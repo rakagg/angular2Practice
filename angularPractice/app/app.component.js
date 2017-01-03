@@ -8,25 +8,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var router_deprecated_1 = require('@angular/router-deprecated');
-var home_component_1 = require('./scripts/home/home.component');
-var job_component_1 = require('./scripts/job/job.component');
-var AppComponent = (function () {
-    function AppComponent() {
+const core_1 = require('@angular/core');
+const ng2_translate_1 = require('ng2-translate');
+let AppComponent = class AppComponent {
+    constructor(translate) {
+        this.translate = translate;
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            directives: [router_deprecated_1.ROUTER_DIRECTIVES],
-            selector: 'my-app',
-            templateUrl: 'app/app.html'
-        }),
-        router_deprecated_1.RouteConfig([
-            { path: '/', name: 'Home', component: home_component_1.Home },
-            { path: '/job', name: 'Job', component: job_component_1.Job }
-        ]), 
-        __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
-}());
+    ngOnInit() {
+        this.translate.addLangs(["en", "fr"]);
+        this.translate.setDefaultLang('en');
+        const browserLang = this.translate.getBrowserLang();
+        this.translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+    }
+};
+AppComponent = __decorate([
+    core_1.Component({
+        selector: 'my-app',
+        templateUrl: 'app/app.html'
+    }), 
+    __metadata('design:paramtypes', [ng2_translate_1.TranslateService])
+], AppComponent);
 exports.AppComponent = AppComponent;
+//# sourceMappingURL=app.component.js.map
